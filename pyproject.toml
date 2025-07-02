@@ -1,25 +1,20 @@
-[project]
+[tool.poetry]
 name = "ai"
 version = "0.1.0"
 description = ""
-authors = [
-    {name = "jasim8799",email = "mdjasimm107@gmail.com"}
-]
-readme = "README.md"
-requires-python = "3.11.8"
-dependencies = [
-    "fastapi (>=0.115.14,<0.116.0)",
-    "uvicorn (>=0.35.0,<0.36.0)",
-    "playwright (==1.43.0)",
-    "requests (>=2.32.4,<3.0.0)",
-    "google-api-python-client (>=2.174.0,<3.0.0)",
-    "google-auth (>=2.40.3,<3.0.0)",
-    "google-auth-oauthlib (>=1.2.2,<2.0.0)",
-    "schedule (>=1.2.2,<2.0.0)",
-    "greenlet (==3.0.3)",
-    "sqlalchemy (==2.0.30)"
-]
+authors = []
 
+[tool.poetry.dependencies]
+python = "^3.11.8"
+fastapi = "^0.115.14"
+uvicorn = "^0.35.0"
+requests = "^2.32.4"
+google-api-python-client = "^2.174.0"
+google-auth = "^2.40.3"
+google-auth-oauthlib = "^1.2.2"
+schedule = "^1.2.2"
+greenlet = "3.0.3"
+sqlalchemy = "2.0.30"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
