@@ -1,0 +1,188 @@
+2025-06-21 02:56:52,373 - ERROR - \u274c Failed to upload file: Page.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button[type=\"submit\"]")
+    - waiting for" https://www.instagram.com/?deoia=1" navigation to finish...
+    - navigated to "https://www.instagram.com/?deoia=1"
+
+2025-06-21 03:00:55,475 - ERROR - \u274c Failed to upload file: Page.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button[type=\"submit\"]")
+    - waiting for" https://www.instagram.com/?deoia=1" navigation to finish...
+    - navigated to "https://www.instagram.com/?deoia=1"
+
+2025-06-21 03:05:14,883 - ERROR - \u274c Failed to upload file: Page.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button[type=\"submit\"]")
+
+2025-06-21 03:10:10,231 - ERROR - \u274c Failed to upload file: Page.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button[type=\"submit\"]")
+    - waiting for" https://www.instagram.com/?deoia=1" navigation to finish...
+    - navigated to "https://www.instagram.com/?deoia=1"
+
+2025-06-21 03:10:57,238 - ERROR - \u274c Failed to upload file: Page.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button[type=\"submit\"]")
+
+2025-06-21 03:15:53,763 - ERROR - \u274c Failed to upload file: Page.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button[type=\"submit\"]")
+
+2025-06-21 03:16:39,050 - ERROR - \u274c Failed to upload file: Page.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button[type=\"submit\"]")
+
+2025-06-21 03:21:13,706 - ERROR - \u274c Failed to upload file: Page.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button[type=\"submit\"]")
+    - waiting for" https://www.instagram.com/?deoia=1" navigation to finish...
+    - navigated to "https://www.instagram.com/?deoia=1"
+
+2025-06-21 13:51:46,902 - ERROR - \u274c Instagram upload failed: Page.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button[type=\"submit\"]")
+
+2025-06-21 13:53:27,164 - ERROR - Future exception was never retrieved
+future: <Future finished exception=TargetClosedError('Target page, context or browser has been closed')>
+playwright._impl._errors.TargetClosedError: Target page, context or browser has been closed
+2025-06-21 13:53:27,164 - ERROR - Future exception was never retrieved
+future: <Future finished exception=TargetClosedError('Target page, context or browser has been closed')>
+playwright._impl._errors.TargetClosedError: Target page, context or browser has been closed
+2025-06-21 13:56:07,727 - ERROR - \u274c Instagram upload failed: Page.click: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("svg[aria-label=\"New post\"]")
+    - waiting for navigation to finish...
+    - navigated to "https://www.instagram.com/#reactivated"
+
+2025-06-21 14:34:31,186 - ERROR - \u274c Instagram upload failed: Page.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button[type=\"submit\"]")
+    - waiting for" https://www.instagram.com/?deoia=1" navigation to finish...
+    - navigated to "https://www.instagram.com/?deoia=1"
+
+2025-06-21 15:03:44,080 - ERROR - \u274c Instagram upload failed: Page.click: Timeout 10000ms exceeded.
+Call log:
+  - waiting for locator("svg[aria-label=\"New post\"]")
+
+2025-06-21 15:04:58,252 - ERROR - \u274c Instagram upload failed: Page.wait_for_selector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button[type=\"submit\"]") to be visible
+
+2025-06-21 15:06:17,403 - ERROR - \u274c Instagram upload failed: Page.wait_for_selector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button[type=\"submit\"]") to be visible
+
+2025-06-21 15:07:25,541 - ERROR - \u274c Instagram upload failed: Page.wait_for_selector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button[type=\"submit\"]") to be visible
+
+2025-06-21 15:08:39,912 - ERROR - \u274c Instagram upload failed: Page.wait_for_selector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("svg[aria-label=\"New post\"]") to be visible
+
+2025-06-21 15:10:31,408 - ERROR - \u274c Instagram upload failed: Page.wait_for_selector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button[type=\"submit\"]")
+
+2025-06-21 15:12:17,698 - ERROR - \u274c Instagram upload failed: Page.wait_for_selector: Timeout 60000ms exceeded.
+Call log:
+  - waiting for locator("svg[aria-label=\"New post\"]") to be visible
+
+2025-06-21 15:14:00,005 - ERROR - \u274c Instagram upload failed: Page.wait_for_selector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button[type=\"submit\"]") to be visible
+
+2025-06-21 15:16:37,090 - ERROR - \u274c Instagram upload failed: Page.evaluate: TypeError: Cannot read properties of null (reading 'disabled')
+    at eval (eval at evaluate (:313:29), <anonymous>:1:39)
+    at UtilityScript.evaluate (<anonymous>:320:18)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+2025-06-21 15:18:28,415 - ERROR - \u274c Instagram upload failed: Page.set_input_files: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("input[type=\"file\"]")
+
+2025-06-21 15:20:33,685 - ERROR - \u274c Instagram upload failed: Page.wait_for_selector: Timeout 60000ms exceeded.
+Call log:
+  - waiting for locator("input[type=\"file\"]") to be visible
+
+2025-06-21 15:23:03,193 - ERROR - \u274c Instagram upload failed: Page.wait_for_selector: Timeout 60000ms exceeded.
+Call log:
+  - waiting for locator("input[type=\"file\"]") to be visible
+
+2025-06-21 15:24:51,479 - ERROR - \u274c Instagram upload failed: Page.wait_for_selector: Timeout 60000ms exceeded.
+Call log:
+  - waiting for locator("input[type=\"file\"]") to be visible
+
+2025-06-21 15:28:43,560 - ERROR - \u274c Instagram upload failed: Page.wait_for_selector: Timeout 60000ms exceeded.
+Call log:
+  - waiting for locator("input[type=\"file\"]") to be visible
+
+2025-06-21 15:33:16,575 - ERROR - \u274c Instagram upload failed: \u274c Failed to find or upload using file input.
+2025-06-21 15:37:23,779 - ERROR - \u274c Instagram upload failed: \u274c Could not find or interact with file input.
+2025-06-21 15:39:04,566 - ERROR - \u274c Instagram upload failed: Page.click: Timeout 10000ms exceeded.
+Call log:
+  - waiting for locator("svg[aria-label=\"New post\"]")
+
+2025-06-21 15:42:32,962 - ERROR - \u274c Instagram upload failed: Page.wait_for_selector: Timeout 60000ms exceeded.
+Call log:
+  - waiting for locator("button[type=\"submit\"]") to be visible
+
+2025-06-21 15:43:00,269 - ERROR - \u274c Instagram upload failed: Page.wait_for_selector: state: expected one of (attached|detached|visible|hidden)
+2025-06-21 15:45:33,362 - ERROR - \u274c Instagram upload failed: Page.wait_for_selector: Timeout 90000ms exceeded.
+Call log:
+  - waiting for locator("button[type=\"submit\"]") to be visible
+
+2025-06-21 15:47:46,276 - ERROR - \u274c Instagram upload failed: Page.wait_for_selector: Timeout 90000ms exceeded.
+Call log:
+  - waiting for locator("button[type=\"submit\"]")
+    - waiting for" https://www.instagram.com/?deoia=1" navigation to finish...
+    - navigated to "https://www.instagram.com/?deoia=1"
+
+2025-06-21 15:58:03,730 - ERROR - \u274c Instagram upload failed: Page.wait_for_selector: Timeout 90000ms exceeded.
+Call log:
+  - waiting for locator("button[type=\"submit\"]")
+    - waiting for" https://www.instagram.com/?deoia=1" navigation to finish...
+    - navigated to "https://www.instagram.com/?deoia=1"
+
+2025-06-21 15:59:47,083 - ERROR - \u274c Instagram upload failed: Page.click: Timeout 10000ms exceeded.
+Call log:
+  - waiting for locator("svg[aria-label='New post']")
+
+2025-06-21 16:02:54,651 - ERROR - \u274c Instagram upload failed: Page.wait_for_selector: Timeout 90000ms exceeded.
+Call log:
+  - waiting for locator("button[type=\"submit\"]")
+
+2025-06-21 16:05:15,041 - ERROR - \u274c Instagram upload failed: Page.wait_for_function: TypeError: Cannot read properties of null (reading 'disabled')
+    at eval (eval at predicate (eval at evaluate (:313:29)), <anonymous>:1:72)
+    at eval (<anonymous>)
+    at predicate (eval at evaluate (:313:29), <anonymous>:3:38)
+    at next (eval at evaluate (:313:29), <anonymous>:25:31)
+    at eval (eval at evaluate (:313:29), <anonymous>:38:11)
+    at UtilityScript.evaluate (<anonymous>:315:16)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+2025-06-21 16:06:18,919 - ERROR - \u274c Instagram upload failed: Page.wait_for_function: EvalError: Refused to evaluate a string as JavaScript because 'unsafe-eval' is not an allowed source of script in the following Content Security Policy directive: "script-src *.instagram.com static.cdninstagram.com *.facebook.com *.fbcdn.net *.facebook.net 127.0.0.1:* 'nonce-aWgBfmIu' blob: 'self' 'wasm-unsafe-eval' https://*.google-analytics.com https://translate.google.com https://apis.google.com https://accounts.google.com".
+
+    at eval (<anonymous>)
+    at predicate (eval at evaluate (:313:29), <anonymous>:3:38)
+    at next (eval at evaluate (:313:29), <anonymous>:25:31)
+2025-06-21 16:07:40,463 - ERROR - \u274c Instagram upload failed: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("svg[aria-label='New post']") to be visible
+
+2025-06-21 16:08:18,737 - ERROR - \u274c Instagram upload failed: Page.wait_for_function: EvalError: Refused to evaluate a string as JavaScript because 'unsafe-eval' is not an allowed source of script in the following Content Security Policy directive: "script-src *.instagram.com static.cdninstagram.com *.facebook.com *.fbcdn.net *.facebook.net 127.0.0.1:* 'nonce-Nmo6XQbx' blob: 'self' 'wasm-unsafe-eval' https://*.google-analytics.com https://translate.google.com https://apis.google.com https://accounts.google.com".
+
+    at eval (<anonymous>)
+    at predicate (eval at evaluate (:313:29), <anonymous>:3:38)
+    at next (eval at evaluate (:313:29), <anonymous>:25:31)
+2025-06-21 16:31:38,510 - ERROR - \u274c Instagram upload failed: Page.wait_for_selector: Target page, context or browser has been closed
+Call log:
+  - waiting for locator("svg[aria-label='New post']") to be visible
+
+2025-06-21 16:31:56,676 - ERROR - \u274c Instagram upload failed: Page.wait_for_timeout: Target page, context or browser has been closed
+2025-06-21 16:32:55,076 - ERROR - \u274c Instagram upload failed: Page.click: Target page, context or browser has been closed
+Call log:
+  - waiting for locator("text=Not Now")
+
+2025-06-21 16:34:01,479 - ERROR - \u274c Instagram upload failed: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("svg[aria-label='New post']") to be visible
+

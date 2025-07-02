@@ -1,0 +1,11 @@
+    fastapi
+    uvicorn
+    playwright==1.43.0
+    requests
+    google-api-python-client
+    google-auth
+    google-auth-oauthlib
+    schedule
+    greenlet==3.0.3
+    SQLAlchemy==2.0.30
+
