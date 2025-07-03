@@ -4,8 +4,6 @@ services:
     env: docker
     plan: free
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.12.3
       - key: IG_USERNAME
         value: jasim_as
       - key: IG_PASSWORD
