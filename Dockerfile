@@ -15,22 +15,16 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-# Copy requirements first for better caching
 COPY requirements.txt .
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt
 
-# Copy rest of your app
 COPY . .
 
-# Install Chromium during build
 RUN python -m playwright install chromium
 
-# Prevent re-install at runtime
 ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 
-# Ensure start.sh is executable
 RUN chmod +x /app/start.sh
 
-# Run using bash for safety
 CMD ["/bin/bash", "./start.sh"]
