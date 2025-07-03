@@ -1,10 +1,13 @@
 services:
-  - type: web
+  - type: worker
     name: ig-bot-service
     env: docker
-    plan: free
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: IG_USERNAME
         value: jasim_as
       - key: IG_PASSWORD
         value: movieforyou
+        value: 628242183714993
+      - key: FB_ACCESS_TOKEN
+        value: EAAOZCPZCxMxlMBOyyF4ivSjF8s7Tf2H5Wjkobii8LyPZAj2sqjWE2mH3fqpTwLU3STrHnceZBfaObguZACpV0jY2cFJdstKfrUdugPfkZAeOZBEiUDB2mjj0mJmEMAYdKYtAIg7JBCDnqd2dLZCwOVdavKmFmAe8mC6pgCisUMhWTKpcChdwZAhraZBxYnzsa2l40eLt6rDPfI
