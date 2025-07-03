@@ -15,12 +15,19 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-COPY . .
-
+# Copy requirements first for better caching
+COPY requirements.txt .
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt
+
+# Copy the rest of your code
+COPY . .
 
 # Install Chromium for Python Playwright
 RUN python -m playwright install chromium
 
-CMD ["./start.sh"]
+# Ensure start.sh is executable
+RUN chmod +x /app/start.sh
+
+# Use bash to run your script
+CMD ["/bin/bash", "./start.sh"]
