@@ -1,5 +1,6 @@
 FROM python:3.12-slim
 
+# Install OS dependencies for Playwright browsers
 RUN apt-get update && \
     apt-get install -y \
         wget \
@@ -46,6 +47,7 @@ COPY . .
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt
 
+# install browsers
 RUN playwright install --with-deps
 
 CMD ["./start.sh"]
