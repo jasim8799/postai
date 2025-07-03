@@ -1,7 +1,5 @@
-# Use Python 3.12 slim image
 FROM python:3.12-slim
 
-# Install Linux packages required for Playwright browsers
 RUN apt-get update && \
     apt-get install -y \
         wget \
@@ -31,10 +29,9 @@ RUN apt-get update && \
         libmanette-0.2-0 \
         libgles2-mesa \
         libsoup-3.0-0 \
-        libgstgl1.0-0 \
+        libgstreamer-gl1.0-0 \
         libgstreamer-plugins-bad1.0-0 \
         libgstcodecparsers-1.0-0 \
-        libgles2-mesa-dev \
         libgl1-mesa-glx \
         libgl1-mesa-dri \
         libegl1-mesa \
@@ -42,18 +39,13 @@ RUN apt-get update && \
         libxkbcommon0 && \
     rm -rf /var/lib/apt/lists/*
 
-# Create app directory
 WORKDIR /app
 
-# Copy all files into container
 COPY . .
 
-# Install Python requirements
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt
 
-# Install Playwright browsers and dependencies
 RUN playwright install --with-deps
 
-# Run your start.sh
 CMD ["./start.sh"]
