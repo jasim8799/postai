@@ -5,4 +5,4 @@ echo '?? Installing Playwright browsers...'
 playwright install
 
 echo '?? Starting your Python app...'
-python main.py
+python youtube_upload.py
