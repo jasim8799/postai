@@ -20,12 +20,7 @@ COPY . .
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt
 
-# Set browser cache path to a predictable place inside the container
-ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
-
-RUN playwright install --with-deps
-
-# Important: ensure permissions are open so the runtime user can read binaries
-RUN chmod -R 777 /ms-playwright
+# Install Chromium for Python Playwright
+RUN python -m playwright install chromium
 
 CMD ["./start.sh"]
