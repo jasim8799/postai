@@ -20,14 +20,17 @@ COPY requirements.txt .
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt
 
-# Copy the rest of your code
+# Copy rest of your app
 COPY . .
 
-# Install Chromium for Python Playwright
+# Install Chromium during build
 RUN python -m playwright install chromium
+
+# Prevent re-install at runtime
+ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 
 # Ensure start.sh is executable
 RUN chmod +x /app/start.sh
 
-# Use bash to run your script
+# Run using bash for safety
 CMD ["/bin/bash", "./start.sh"]
