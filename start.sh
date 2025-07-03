@@ -8,5 +8,5 @@ pip install -r requirements.txt
 echo '✅ Installing Playwright browsers...'
 playwright install
 
-echo '✅ Starting your Python app...'
+echo '✅ Starting background worker...'
 python main.py
