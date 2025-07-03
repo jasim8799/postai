@@ -36,18 +36,13 @@ RUN apt-get update && \
         libgstcodecparsers-1.0-0 && \
     rm -rf /var/lib/apt/lists/*
 
-# Create app directory
 WORKDIR /app
 
-# Copy all files into container
 COPY . .
 
-# Install Python requirements
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt
 
-# Install Playwright browsers and dependencies
 RUN playwright install --with-deps
 
-# Run your start.sh
 CMD ["./start.sh"]
