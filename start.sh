@@ -9,4 +9,4 @@ echo '✅ Installing Playwright browsers...'
 playwright install
 
 echo '✅ Starting your Python app...'
-uvicorn main:app --host 0.0.0.0 --port 10000
+python main.py
