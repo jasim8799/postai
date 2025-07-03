@@ -15,7 +15,3 @@ services:
         value: jasim_as
       - key: IG_PASSWORD
         value: movieforyou
-      - key: 
-        value: jasim_as
-      - key: IG_PASSWORD
-        value: movieforyou
