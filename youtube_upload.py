@@ -1,5 +1,6 @@
 import os
-import google_auth_oauthlib.flow
+import json
+from google.oauth2.credentials import Credentials
 import googleapiclient.discovery
 import googleapiclient.errors
 from googleapiclient.http import MediaFileUpload
@@ -8,13 +9,25 @@ from googleapiclient.http import MediaFileUpload
 SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
 
 def authenticate_youtube():
-    flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
-        "client_secret.json", SCOPES
+    """
+    Authenticate YouTube API using pre-generated token from environment variable.
+    """
+    youtube_token_json = os.environ.get("YOUTUBE_TOKEN_JSON")
+
+    if youtube_token_json is None:
+        raise RuntimeError("YOUTUBE_TOKEN_JSON environment variable not set!")
+
+    creds_info = json.loads(youtube_token_json)
+
+    credentials = Credentials.from_authorized_user_info(
+        creds_info,
+        scopes=SCOPES
     )
-    credentials = flow.run_local_server(port=0)
+
     youtube = googleapiclient.discovery.build(
         "youtube", "v3", credentials=credentials
     )
+
     return youtube
 
 def post_to_youtube(youtube, video_file_path, title, description):
@@ -46,3 +59,4 @@ def post_to_youtube(youtube, video_file_path, title, description):
 
     print(f"YT Uploaded: https://youtu.be/{response['id']}")
     return response["id"]
+
