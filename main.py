@@ -1,10 +1,8 @@
 import os
 import json
-import time
 import asyncio
-import random
 
-from download_reel import download_reel_by_user
+from download_reel import download_reel_by_user, save_profiles, load_profiles
 from youtube_upload import authenticate_youtube, post_to_youtube
 from facebook_upload import post_to_facebook
 
@@ -41,7 +39,6 @@ def get_next_title_caption_tags():
         ["insta", "viralcontent", "trending", "explore", "foryou"]
     ]
 
-    # Loop around when list exhausted
     idx = title_caption_index % len(titles)
     title_caption_index += 1
 
@@ -60,7 +57,6 @@ async def handle_user(user_obj, youtube):
 
     print(f"\n🔁 Processing user: {username}")
     try:
-        # download_reel_by_user returns (video_path, shortcode)
         video_path, shortcode = await download_reel_by_user(username, posted_shortcodes)
 
         if not video_path:
@@ -95,10 +91,9 @@ async def handle_user(user_obj, youtube):
         user_obj["posted_shortcodes"] = posted_shortcodes
 
         # Save updated profiles
-        from download_reel import save_user_profiles, load_profiles
         try:
             profiles = load_profiles()
-            save_user_profiles(profiles=profiles)
+            save_profiles(profiles=profiles)
         except Exception as e:
             print(f"⚠️ Failed to save user profiles: {e}")
 
@@ -127,7 +122,7 @@ async def main_loop():
         if success:
             user_index += 1
             print("⏳ Sleeping 2 minutes...\n")
-            time.sleep(120)   # sleep only if all succeeded
+            await asyncio.sleep(120)
         else:
             print(f"🔁 Retrying user: {user_obj['username']} (no sleep because upload or download failed)")
 
