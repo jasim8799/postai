@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-set -e
 
-echo '✅ Starting background worker...'
+# Activate the virtualenv
+source .venv/bin/activate
+
+# Run your main script
 python main.py
