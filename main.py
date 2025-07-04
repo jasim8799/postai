@@ -1,130 +1,61 @@
 import os
-import json
 import asyncio
+from playwright.async_api import async_playwright
 
-from download_reel import download_reel_by_user, save_profiles, load_profiles
-from youtube_upload import authenticate_youtube, post_to_youtube
-from facebook_upload import post_to_facebook
+USERNAME = os.getenv("IG_USERNAME", "sofia9__official")
+VIDEO_DIR = "input_movies"
+SESSION_DIR = "ig_session"
 
-# Title/caption/tag rotation state
-title_caption_index = 0
+async def download_latest_reel_playwright(username):
+    os.makedirs(VIDEO_DIR, exist_ok=True)
 
-def get_next_title_caption_tags():
-    """
-    Returns next title, caption, and tags from rotating lists.
-    """
-    global title_caption_index
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=True)
+        context = await browser.new_context(storage_state=None)
+        page = await context.new_page()
 
-    titles = [
-        "🔥 Must-Watch Viral clip!",
-        "✨ Trending | Don't Miss Out!",
-        "🎥 Latest Trending Short Video!",
-        "🚀 Instagram Viral Reel | Entertainment Shorts",
-        "📸 Exclusive Insta Reel | Short Going Viral!"
-    ]
+        # Instagram URL
+        url = f"https://www.instagram.com/{username}/"
 
-    captions = [
-        "Enjoy this latest trending reel! 🔥 #viral #reels #trending #shorts #instagram",
-        "New viral video — watch till the end! 🤩 #InstaReels #shortvideo",
-        "Trending content alert! 🌟 Don’t miss it. #entertainment #viral",
-        "Another viral reel. Check it out! 💥 #trending #viralvideos",
-        "Watch and share! 🙌 #insta #viralcontent #trending"
-    ]
+        print(f"🌐 Visiting profile: {url}")
+        await page.goto(url, wait_until="networkidle")
 
-    tags = [
-        ["viral", "reels", "instagram", "trending", "shorts", "entertainment"],
-        ["instareels", "shortvideo", "viralvideo", "trend", "viralcontent"],
-        ["entertainment", "viral", "videooftheday", "mustwatch"],
-        ["trending", "viralvideos", "hot", "explorepage"],
-        ["insta", "viralcontent", "trending", "explore", "foryou"]
-    ]
+        # Find the first reel thumbnail
+        reel_links = await page.locator("a[href*='/reel/']").all()
+        if not reel_links:
+            print("⚠️ No reels found on profile.")
+            return
 
-    idx = title_caption_index % len(titles)
-    title_caption_index += 1
+        first_reel_link = await reel_links[0].get_attribute("href")
+        reel_url = f"https://www.instagram.com{first_reel_link}"
+        print(f"🎯 Found reel URL: {reel_url}")
 
-    return titles[idx], captions[idx], tags[idx]
+        # Go to the reel page
+        await page.goto(reel_url, wait_until="networkidle")
 
-def load_user_profiles(path="user_profiles.json"):
-    if not os.path.exists(path):
-        print(f"❌ {path} not found!")
-        return []
-    with open(path, "r") as f:
-        return json.load(f)
+        # Locate video tag and extract URL
+        video_tag = page.locator("video")
+        video_url = await video_tag.get_attribute("src")
 
-async def handle_user(user_obj, youtube):
-    username = user_obj["username"]
-    posted_shortcodes = user_obj.get("posted_shortcodes", [])
+        if not video_url:
+            print("⚠️ Could not extract video URL.")
+            return
 
-    print(f"\n🔁 Processing user: {username}")
-    try:
-        video_path, shortcode = await download_reel_by_user(username, posted_shortcodes)
+        # Download the video file
+        filename = os.path.join(VIDEO_DIR, f"{first_reel_link.strip('/').split('/')[-1]}.mp4")
+        print(f"⬇️ Downloading video to {filename}")
+        import requests
+        response = requests.get(video_url, stream=True)
+        with open(filename, "wb") as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                f.write(chunk)
 
-        if not video_path:
-            print(f"⚠️ No video found for {username}")
-            return False
+        print(f"✅ Download complete: {filename}")
 
-        # Get rotating title, caption, tags
-        title, caption, tags = get_next_title_caption_tags()
+        await browser.close()
 
-        # Upload to YouTube
-        yt_id = post_to_youtube(
-            youtube,
-            video_path,
-            title=title,
-            description=caption
-        )
-        if not yt_id:
-            print(f"❌ YouTube upload failed for {username}")
-            return False
-
-        # Upload to Facebook
-        fb_url = post_to_facebook(
-            video_path,
-            message=caption
-        )
-        if not fb_url:
-            print(f"❌ Facebook upload failed for {username}")
-            return False
-
-        # Mark this shortcode as posted
-        posted_shortcodes.append(shortcode)
-        user_obj["posted_shortcodes"] = posted_shortcodes
-
-        # Save updated profiles
-        try:
-            profiles = load_profiles()
-            save_profiles(profiles=profiles)
-        except Exception as e:
-            print(f"⚠️ Failed to save user profiles: {e}")
-
-        # Clean up file
-        os.remove(video_path)
-        print(f"✅ Successfully posted for {username}")
-        return True
-
-    except Exception as e:
-        print(f"❌ Exception for {username}: {e}")
-        return False
-
-async def main_loop():
-    youtube = authenticate_youtube()
-    user_list = load_user_profiles()
-    if not user_list:
-        print("❌ No users found in user_profiles.json")
-        return
-
-    user_index = 0
-    while True:
-        user_obj = user_list[user_index % len(user_list)]
-
-        success = await handle_user(user_obj, youtube)
-
-        if success:
-            user_index += 1
-            print("⏳ Sleeping 2 minutes...\n")
-            await asyncio.sleep(120)
-        else:
-            print(f"🔁 Retrying user: {user_obj['username']} (no sleep because upload or download failed)")
+async def main():
+    await download_latest_reel_playwright(USERNAME)
 
 if __name__ == "__main__":
-    asyncio.run(main_loop())
+    asyncio.run(main())
