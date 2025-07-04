@@ -1,30 +1,29 @@
-FROM python:3.12-slim
+FROM python:3.11-slim
 
-# Install OS dependencies required for Playwright
+# Install system dependencies for Playwright browsers
 RUN apt-get update && \
-    apt-get install -y \
-        wget curl gnupg \
-        fonts-liberation libatk-bridge2.0-0 libatk1.0-0 libcups2 libdbus-1-3 libdrm2 libgbm1 \
-        libgtk-3-0 libnspr4 libnss3 libx11-xcb1 libxcomposite1 libxdamage1 libxrandr2 \
-        xdg-utils libasound2 libxss1 libxtst6 libxshmfence1 libsecret-1-0 libenchant-2-2 \
-        libmanette-0.2-0 libgles2-mesa libsoup-3.0-0 libgstreamer-gl1.0-0 \
-        libgstreamer-plugins-bad1.0-0 libgstcodecparsers-1.0-0 libgl1-mesa-glx \
-        libgl1-mesa-dri libegl1-mesa libwayland-egl1-mesa libxkbcommon0 \
-        git && \
+    apt-get install -y wget gnupg \
+      libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 \
+      libdrm2 libxkbcommon0 libgbm1 libgtk-3-0 \
+      libasound2 libxcomposite1 libxdamage1 \
+      libxrandr2 libxss1 libxtst6 fonts-liberation \
+      libappindicator3-1 libatk-bridge2.0-0 \
+      libgtk-3-0 libenchant-2-2 libsecret-1-0 \
+      libmanette-0.2-0 libgles2 libsoup-3.0-0 \
+      gstreamer1.0-gl gstreamer1.0-plugins-base \
+      gstreamer1.0-plugins-good gstreamer1.0-plugins-bad \
+      gstreamer1.0-plugins-ugly && \
     rm -rf /var/lib/apt/lists/*
 
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Install Playwright browsers
+RUN playwright install --with-deps
+
+# Copy your app code
+COPY . /app
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
-
-COPY . .
-
-RUN python -m playwright install chromium
-
-ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-
-RUN chmod +x /app/start.sh
-
-CMD ["/bin/bash", "./start.sh"]
+CMD ["gunicorn", "server:app", "-w", "1", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:10000"]
