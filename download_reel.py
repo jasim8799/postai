@@ -34,19 +34,24 @@ def save_profiles(profiles):
 async def download_reel_by_url(page, reel_url, shortcode):
     try:
         print(f"🎯 Visiting reel page: {reel_url}")
-        await page.goto(reel_url, wait_until="domcontentloaded", timeout=40000)
+        await page.goto(reel_url, wait_until="networkidle", timeout=60000)
+
+        # Try to dismiss cookie banners
+        try:
+            if await page.locator("button:has-text('Allow all cookies')").is_visible(timeout=3000):
+                await page.click("button:has-text('Allow all cookies')")
+                print("✅ Clicked 'Allow all cookies'")
+        except:
+            pass
 
         content = await page.content()
         if "we're having trouble playing this video" in content:
             print("⚠️ Instagram can't play this reel. Skipping.")
             return None, None
 
-        await page.mouse.move(200, 300)
-        await page.mouse.click(200, 300)
-        await page.wait_for_timeout(3000)
-
         video_urls = []
 
+        # Check if video is directly in <video> tag
         video_tag = await page.query_selector("video")
         if video_tag:
             video_src = await video_tag.get_attribute("src")
@@ -75,6 +80,7 @@ async def download_reel_by_url(page, reel_url, shortcode):
             print("❌ No video found.")
             return None, None
 
+        # Deduplicate URLs
         seen = set()
         unique_urls = []
         for url in video_urls:
@@ -140,9 +146,17 @@ async def download_reel_by_user(username, posted_shortcodes=[]):
 
         try:
             print(f"🔐 Logging in for user: {username}")
-            await page.goto(f"https://www.instagram.com/{username}/reels/")
-            await page.wait_for_timeout(3000)
+            await page.goto(f"https://www.instagram.com/{username}/reels/", wait_until="networkidle", timeout=60000)
 
+            # Dismiss cookie banners if present
+            try:
+                if await page.locator("button:has-text('Allow all cookies')").is_visible(timeout=3000):
+                    await page.click("button:has-text('Allow all cookies')")
+                    print("✅ Clicked 'Allow all cookies'")
+            except:
+                pass
+
+            # Handle One Tap login popup if visible
             if "accounts/onetap" in page.url:
                 print("⚠️ OneTap login detected. Bypassing...")
                 not_now_button = await page.query_selector("text=Not Now")
@@ -154,6 +168,7 @@ async def download_reel_by_user(username, posted_shortcodes=[]):
                     await page.goto(f"https://www.instagram.com/{username}/reels/")
                     await page.wait_for_timeout(5000)
 
+            # Scroll down to load reels
             for _ in range(8):
                 await page.mouse.wheel(0, 4000)
                 await page.wait_for_timeout(2000)
@@ -165,7 +180,7 @@ async def download_reel_by_user(username, posted_shortcodes=[]):
             all_hrefs = []
             for attempt in range(max_retries):
                 try:
-                    await page.wait_for_selector("a[href*='/reel/']", timeout=30000)
+                    await page.wait_for_selector("a[href*='/reel/']", timeout=60000)
                     reel_links = await page.query_selector_all("a[href*='/reel/']")
                     for link in reel_links:
                         href = await link.get_attribute("href")
@@ -174,45 +189,4 @@ async def download_reel_by_user(username, posted_shortcodes=[]):
                     if all_hrefs:
                         break
                 except Exception as e:
-                    print(f"⚠️ Attempt {attempt+1} failed: {e}")
-                    if attempt == max_retries - 1:
-                        print("🚨 Failed to find reel links after retries.")
-                        await page.screenshot(path=f"{username}_reel_error.png", full_page=True)
-                        await browser.close()
-                        return None, None
-                    else:
-                        await page.wait_for_timeout(5000)
-
-            if not all_hrefs:
-                print(f"❌ No reel links found for {username}.")
-                await browser.close()
-                return None, None
-
-            all_hrefs_sorted = sorted(all_hrefs, key=lambda href: all_hrefs.index(href))
-            for href in all_hrefs_sorted:
-                sc = href.strip("/").split("/")[-1]
-                if sc in posted_shortcodes:
-                    print(f"⏭️ Already posted reel {sc}. Skipping.")
-                    continue
-
-                reel_url = urljoin("https://www.instagram.com", href)
-                print(f"⏳ Downloading reel from URL: {reel_url}")
-                video_path, shortcode = await download_reel_by_url(page, reel_url, sc)
-                if video_path:
-                    await browser.close()
-                    return video_path, shortcode
-
-            print(f"⚠️ No new reels downloaded for {username}")
-            await browser.close()
-            return None, None
-
-        except Exception as e:
-            print(f"🚨 Error in download_reel_by_user: {e}")
-            await browser.close()
-            return None, None
-
-def save_user_profiles(path="user_profiles.json", profiles=None):
-    if profiles is None:
-        profiles = load_profiles()
-    with open(path, "w") as f:
-        json.dump(profiles, f, indent=2)
+                    print(f"⚠️ Attempt
